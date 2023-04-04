@@ -97,6 +97,25 @@ async function createScreenings(screens, movies) {
     }
 }
 
+async function createSeat() {
+    const seat = await prisma.seat.create({
+        data: {
+            seatNumber: 'A1',
+            screen: {
+                connect: {
+                    id: 1
+                }
+            },
+            tickets: {
+                create: [{ screeningId: 1, customerId: 1 }]
+            }
+        },
+        include: {
+            tickets: true
+        }
+    })
+}
+
 seed()
     .catch(async e => {
         console.error(e);
